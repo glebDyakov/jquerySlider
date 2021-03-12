@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>crazy pande</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <link rel="stylesheet" href="./jquery-ui-1.12.1.custom/jquery-ui.css">
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>	
+
+<style>
+	#colorChange, #backgroundColorChange {
+		margin: 0px 50px;
+		border:3px solid black;
+	}
+	* {
+		margin: 0px;
+		padding	: 0px;
+	}
+	#sliderOne .ui-slider-range { background: #ef2929; }
+	#sliderOne .ui-slider-handle { border-color: #ef2929; }
+	#sliderTwo .ui-slider-range { background: #8ae234; }
+	#sliderTwo .ui-slider-handle { border-color: #8ae234; }
+	#sliderThree .ui-slider-range { background: #729fcf; }
+	#sliderThree .ui-slider-handle { border-color: #729fcf; }
+	#sliderOne, #sliderTwo, #sliderThree {
+		margin:15px;
+	}
+	.float {
+		width:50%;
+		height:150px;
+		float:left;
+	}
+	.block {
+		border:2px solid black;
+		box-sizing:border-box;
+	}
+</style>
+</head>
+<body>
+ <fieldset>
+  <legend>Select:</legend>
+	<button id="colorChange" type="button" class="btn btn-light">color</button>
+	<button id="backgroundColorChange" type="button" class="btn btn-primary">backgroundColor</button>
+</fieldset>
+<div class="float">
+	<div id="sliderOne"></div>
+	<div id="sliderTwo"></div>
+	<div id="sliderThree"></div>
+</div>
+
+<div id="swatch" class="float block">
+	loremipsum
+</div>
+<script>
+  $( function() {
+	var action = "colorChange"
+	function hexFromRGB(r, g, b) {
+		var hex = [
+	        	r.toString( 16 ),
+		        g.toString( 16 ),
+		        b.toString( 16 )
+	      ];
+	      $.each( hex, function( nr, val ) {
+	        if ( val.length === 1 ) {
+	          hex[ nr ] = "0" + val;
+	        }
+	      });
+      return hex.join( "" ).toUpperCase();
+    }
+	function refreshSwatch() {
+		var red = $( "#sliderOne" ).slider( "value" ),
+	        green = $( "#sliderTwo" ).slider( "value" ),
+	        blue = $( "#sliderThree" ).slider( "value" ),
+	        hex = hexFromRGB( red, green, blue );	
+		if(action == "colorChange"){
+			$( "#swatch" ).css( "color", "#" + hex );
+	    	} else if(action == "backgroundColorChange"){
+			$( "#swatch" ).css( "background-color", "#" + hex );
+	    	}
+	}
+
+    $( "#sliderOne").slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 255,
+      value: 127,
+      slide: refreshSwatch,
+      change: refreshSwatch
+    });
+    $( "#sliderTwo" ).slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 255,
+      value: 127,
+      slide: refreshSwatch,
+      change: refreshSwatch
+    });
+    $("#sliderThree").slider({
+      orientation: "horizontal",
+      range: "min",
+      max: 255,
+      value: 127,
+      slide: refreshSwatch,
+      change: refreshSwatch
+    });
+
+	$("#backgroundColorChange").click(function(){
+		action = "backgroundColorChange"
+	})
+
+	$("#colorChange").click(function(){
+		action = "colorChange"		
+	})
+  });
+  </script>
+</body>
+</html>
